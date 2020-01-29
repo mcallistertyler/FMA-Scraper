@@ -11,10 +11,7 @@ Write to a file
 
 import re
 import traceback
-try:
-    from urllib.parse import urlparse
-except ImportError:
-    from urlparse import urlparse
+import urlparse
 
 # Email regex for extraction
 # A simple version
@@ -41,19 +38,19 @@ def extract(type, in_filename):
 
 	if (type == EXTRACT_TYPE.EMAIL):
 		extracted_data_list = extract_emails(data)
-		print('%d emails extracted to .csv' % len(extracted_data_list))
+		print '%d emails extracted to .csv' % len(extracted_data_list)
 
 	if (type == EXTRACT_TYPE.URL):
 		extracted_data_list = extract_urls(data)
-		print('%d URLs extracted to .csv' % len(extracted_data_list))
+		print '%d URLs extracted to .csv' % len(extracted_data_list)
 
 	if (type == EXTRACT_TYPE.DOMAIN):
 		extracted_data_list = extract_domains(data)
-		print('%d domains extracted to .csv' % len(extracted_data_list))
+		print '%d domains extracted to .csv' % len(extracted_data_list)
 
 	if (type == EXTRACT_TYPE.MOBILE):
 		extracted_data_list = extract_sg_mobile(data)
-		print('%d mobile numbers extracted to .csv' % len(extracted_data_list))
+		print '%d mobile numbers extracted to .csv' % len(extracted_data_list)
 
 	# Write to the file
 	# eg. filename - email.csv
@@ -145,7 +142,7 @@ def extract_domains(data):
 	_set = set()
 	urls = extract_urls(data)
 	for url in urls:
-		hostname = urllib.parse.urlparse(url).hostname.split(".")
+		hostname = urlparse.urlparse(url).hostname.split(".")
 		hostname = ".".join(len(hostname[-2]) < 4 and hostname[-3:] or hostname[-2:])
 		_set.add(hostname)
 	return _set
@@ -187,20 +184,20 @@ if __name__ == "__main__":
 	# print vars(args)
 
 	if args.emails or args.all:
-		print('Extracting emails..')
+		print 'Extracting emails..'
 		extract(EXTRACT_TYPE.EMAIL, args.filename)
 
 	if args.urls or args.all:
-		print('Extracting URLs..')
+		print 'Extracting URLs..'
 		extract(EXTRACT_TYPE.URL, args.filename)
 
 	if args.domains or args.all:
-		print('Extracting domains..')
+		print 'Extracting domains..'
 		extract(EXTRACT_TYPE.DOMAIN, args.filename)
 
 	if args.mobile or args.all:
-		print('Extracting mobile numbers..')
+		print 'Extracting mobile numbers..'
 		extract(EXTRACT_TYPE.MOBILE, args.filename)
 
 	if args.verbosity:
-		print('Verbosity level: %s' % args.verbosityp)
+		print 'Verbosity level: %s' % args.verbosityp
